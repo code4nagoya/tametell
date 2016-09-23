@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>nagoya.code4</groupId>
-	<artifactId>tametell-business</artifactId>
+	<artifactId>tametell-core</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>sroi-business</name>
-	<url>http://maven.apache.org</url>
+	<name>tametell-core</name>
+	<url>http://code4.nagoya</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,11 +22,26 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>nagoya.code4</groupId>
-			<artifactId>tametell-core</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.10-FINAL</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.springtestdbunit</groupId>
+			<artifactId>spring-test-dbunit</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -34,4 +49,40 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<!-- run "mvn hibernate3:hbm2ddl" to generate a schema -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>jpaconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+						<persistenceunit>persistenceUnit</persistenceunit>
+						<outputfilename>schema.ddl</outputfilename>
+						<drop>false</drop>
+						<create>true</create>
+						<export>false</export>
+						<format>true</format>
+					</componentProperties>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
