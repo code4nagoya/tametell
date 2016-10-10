@@ -1,0 +1,1 @@
+select * from npo_admin_role
